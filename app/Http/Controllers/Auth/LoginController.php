@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Model\Setting\SocialCreadential;
+
 
 class LoginController extends Controller
 {
@@ -37,4 +39,48 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+        public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    
+    public function showLoginForm()
+    {
+        $social_provider = SocialCreadential::select('id', 'provider')
+                           ->where('status', '=', 1)
+                           ->get();
+        return view('auth.login',['social_provider' => $social_provider]);
+    }
+
+   public function authenticated(Request $request, $user)
+    {
+        return redirect()->intended('profile');
+    }
+
+    public function handleProviderCallback($provider)
+    {
+        try {
+            $userSocial = Socialite::driver($provider)->stateless()->user();
+            $user = User::where('email', $userSocial->getEmail())->first();
+            if ($user) {
+                Auth::login($user);
+                return redirect()->intended('profile');
+            } else {
+                
+                $user = User::create([
+                    'name' => $userSocial->getName(),
+                    'email' => $userSocial->getEmail(),
+                ]);
+                Auth::login($user);
+                // return redirect($this->redirectTo);
+                return redirect()->intended('profile');
+            }
+            
+        } catch (\Exception $e) {
+            Session::flash('error','Something went wrong!');
+            return redirect()->back();
+        }
+    }
+    
 }

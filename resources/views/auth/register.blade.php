@@ -69,6 +69,19 @@
                             </div>
                         </div>
                     </form>
+                        <div class="register-social text-center mt20">
+                                <p class="ml-social login-with-social" >Login with Social Media</p>
+                                        @foreach($social_provider as $value)
+                                            <a href="{{ url('login/'.$value->provider) }}"
+                                             class="button button-sm 
+                                             @if($value->provider == 'facebook') bg-fb @endif
+                                             @if($value->provider == 'google') bg-plus @endif
+                                             @if($value->provider == 'twitter') bg-info @endif
+                                              color-white mb10">
+                                             <i class="lni lni-{{ $value->provider }}" aria-hidden="true"></i> 
+                                             </a>
+                                @endforeach  
+                                </div>
                 </div>
             </div>
         </div>
