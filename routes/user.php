@@ -28,3 +28,9 @@ Route::group(['middleware' => 'auth'], function () {
     );
 
 });
+
+Route::group(['middleware' => 'guest'], function () {
+
+    Route::post('user/reset/password', 'Front\User\UserController@storeResetPassword')->name('user.confirm.password');
+
+});

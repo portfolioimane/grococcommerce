@@ -13,6 +13,7 @@ const store = new Vuex.Store(
 
 Vue.component('verification', require('./components/front/setting/Verification.vue').default);
 Vue.component('cart', require('./components/front/cart/Cart.vue').default);
+Vue.component('search-product', require('./components/front/product/SearchProduct.vue').default);
 
 var app = new Vue({
 

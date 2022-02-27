@@ -25,5 +25,27 @@ class UserController extends Controller
     {
         return view('front.user.dashboard');
     }
+    
+    public function storeNewPassword(Request $request)
+    {
+        $request->validate([
+            'oldpassword' => 'required',
+            'password'    => 'required|confirmed|min:6',
+        ]);
+
+        $hasPassword = Auth::user()->password;
+
+        if (Hash::check($request->oldpassword, $hasPassword)) {
+            $user           = User::find(Auth::id());
+            $user->password = Hash::make($request->password);
+            $user->save();
+            Auth::logout();
+            Session::flash('success', 'Password Changed Successfully!');
+            return redirect()->route('login');
+        } else {
+            Session::flash('error', 'Current Password is Invalid!');
+            return redirect()->back();
+        }
+    }
 
 }

@@ -51,3 +51,22 @@ function getCurrentCurrency()
         return App\Model\Currency::where('currency_status', 1)->first();
     });
 }
+
+function frontCategory()
+{
+
+    return cache()->remember('all-category', 43000, function () {
+        return App\Model\Category::select('id', 'category_name', 'category_native_name', 'icon')
+            ->with('sub_category.sub_sub_category')
+            ->where('status', '=', 1)
+            ->get();
+    });
+
+}
+
+function date_convert($data)
+{
+    $strDate = substr($data, 4, 11);
+    $finaldt = date('Y-m-d H:i:s', strtotime($strDate));
+    return $finaldt;
+}
