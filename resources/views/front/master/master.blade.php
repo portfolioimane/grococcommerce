@@ -134,5 +134,130 @@ $google_analytics = googleAnalytics();
 @include('front.include.cart')
 
 </header>
-    
+<!--    end header-->
+<div class="wrapper">
+<!-- start Sidebar  -->
 
+ @include('front.include.left_sidebar')
+
+<!-- end Sidebar  -->
+
+<!-- Page Content  -->
+<div id="content">
+<!-- search result apear  -->
+            @php
+            $currency = getCurrentCurrency();
+            @endphp
+<search-product :currency="{{ $currency  }}"></search-product>
+<!-- search result apear  -->
+<div class="message" style="width: 100%;/*background: #032c44;*/ display: none;">
+  @foreach (['warning', 'success', 'error'] as $msg)
+    @if(Session::has($msg))
+     <p class="text-center" style="padding-top: 20px; padding-bottom:20px; font-size: 22px; color: #fff;">{{ Session::get($msg) }}</p>
+    @endif
+  @endforeach
+</div>
+    @yield('content')
+
+<!--start email subscribe-->
+<section class="subscribe clearfix mt50 text-center">
+    <user-subscribe></user-subscribe>
+</section>
+<!--end email subscribe-->
+
+  @include('front.include.footer')
+</div>
+</div>
+
+</div>
+<!-- End Back To Top Button -->
+    <script>
+        var base_url = "{{ url('/') }}"+'/';
+    </script>
+<!--jquery js-->
+<script src="{{ asset('assets/js/jquery-3.4.1.js') }}"></script>
+<!--boostrap js-->
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<!--popper js-->
+<script src="{{ asset('assets/js/popper.js') }}"></script>
+<!--swiper js-->
+<script src="{{ asset('assets/js/jquery.elevatezoom.js') }}"></script>
+<!--magnific js-->
+<script src="{{ asset('assets/js/magnific.js') }}"></script>
+<!--main js-->
+<script src="{{ asset('assets/js/main.js') }}"></script>
+
+
+@stack('script')
+
+
+<script type="text/javascript">
+       $(document).ready(function($){
+
+          @foreach (['warning', 'success', 'error'] as $msg)
+            @if(Session::has($msg))
+              @switch($msg)
+                @case('warning')
+                  $('.message').addClass('bg-warning');
+                @break;
+                @case('error')
+                  $('.message').addClass('bg-danger');
+                @break;
+                @default
+                  $('.message').addClass('bg-success');
+              @endswitch
+              $('.message').slideDown("slow").delay(4500).slideUp("slow");
+            @endif
+        @endforeach
+
+        // $('.sidebar').addClass('active');
+
+       })
+</script>
+<!-- coming from app/helpers/helper  -->
+@php
+$facebook_chat = facebookChat();
+@endphp
+
+@if($facebook_chat && $facebook_chat->status == 1)
+<div class="fb-customerchat"
+ page_id="{{ $facebook_chat->app_id }}"
+ minimized="true"
+ theme_color="{{ $shop_info->theme_color }}"
+ >
+</div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '173637076534990',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v2.11'
+    });
+  };(function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/he_EN/sdk/xfbml.customerchat.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+@endif
+
+<script type="text/javascript">
+    // Initialize the service worker
+    // if ('serviceWorker' in navigator) {
+    //     navigator.serviceWorker.register('/serviceworker.js', {
+    //         scope: '.'
+    //     }).then(function (registration) {
+    //         // Registration was successful
+    //         // console.log('Laravel PWA: ServiceWorker registration successful with scope: ', registration.scope);
+    //     }, function (err) {
+    //         // registration failed :(
+    //         // console.log('Laravel PWA: ServiceWorker registration failed: ', err);
+    //     });
+    // }
+</script>
+</body>
+
+</html>

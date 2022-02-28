@@ -70,3 +70,10 @@ function date_convert($data)
     $finaldt = date('Y-m-d H:i:s', strtotime($strDate));
     return $finaldt;
 }
+
+function facebookChat()
+{
+    return cache()->remember('facebook-setting', 43000, function () {
+        return App\Model\Setting\Messenger::orderBy('id', 'desc')->first();
+    });
+}
