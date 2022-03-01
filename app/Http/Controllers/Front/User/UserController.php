@@ -25,6 +25,16 @@ class UserController extends Controller
     {
         return view('front.user.dashboard');
     }
+
+
+        public function logout()
+    {
+        Auth::logout();
+        Session::flash('success', 'You are Logout!');
+        return redirect()->to('/');
+    }
+
+    
     
     public function storeNewPassword(Request $request)
     {
@@ -47,5 +57,7 @@ class UserController extends Controller
             return redirect()->back();
         }
     }
+
+
 
 }
