@@ -67,8 +67,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
+Route::get('otp/enable/{code}', 'OTP\OTPController@enableOtp');
+Route::get('otp/disable/{code}', 'OTP\OTPController@disableOtp');
 
 Route::group(['middleware' => 'guest'], function () {
+    Route::get('dev/test', 'Admin\AdminController@tester');
+    Route::post('otp', 'OTP\OTPController@store')->name('send.otp');
+    Route::get('otp/submit/{phone}', 'OTP\OTPController@otpForm')->name('otp.form');
+    Route::post('otp/submit', 'OTP\OTPController@otpSubmitByUser')->name('submit.otp');
 
     Route::post('user-password-email-reset-link', 'Front\User\UserController@sendEmailLink')->name('user-password-email-reset-link');
     Route::get('user/reset/{token?}', 'Front\User\UserController@viewUserResetPage');

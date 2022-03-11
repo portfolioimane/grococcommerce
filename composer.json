@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "ext-gd": "*",
         "barryvdh/laravel-dompdf": "^1.0",
         "bumbummen99/shoppingcart": "^4.1",
         "fruitcake/laravel-cors": "^2.0",
@@ -15,8 +16,11 @@
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "maatwebsite/excel": "^3.1",
         "protonemedia/laravel-analytics-event-tracking": "^1.4",
-        "silviolleite/laravelpwa": "^2.0"
+        "silviolleite/laravelpwa": "^2.0",
+        "srmklive/paypal": "~3.0",
+        "stripe/stripe-php": "^7.116"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -36,6 +36,15 @@ class CartController extends Controller
     }
 
 
+     public function checkOutPage()
+    {
+        $payment_method = PaymentSetting::select('id', 'provider')->where('status', '=', 1)->get();
+        return view('front.checkout.checkout', [
+            'payment_method' => $payment_method,
+        ]);
+
+    }
+
 
         /**
      * Remove the specified resource from storage.

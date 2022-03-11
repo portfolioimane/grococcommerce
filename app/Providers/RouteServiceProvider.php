@@ -79,6 +79,12 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(base_path('routes/cart.php'));
 
+        // payment related route
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/payment.php'));
+
+
         // product route
       /*  Route::middleware('web')
             ->namespace($this->namespace)
@@ -118,10 +124,7 @@ class RouteServiceProvider extends ServiceProvider
 
       
 
-        // payment related route
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/payment.php'));
+       
     }
     */
 

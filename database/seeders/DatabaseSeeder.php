@@ -39,6 +39,11 @@ class DatabaseSeeder extends Seeder
 
        DB::insert("INSERT INTO `shipping_costs` (`id`, `shipping_amount`, `minimum_order_amount`, `order_amount`, `discount_amount`, `shipping_status`, `discount_status`, `created_at`, `updated_at`) VALUES
        (1, 40, 300, 1500, 20, 1, 1, '2020-04-18 20:48:42', '2020-05-18 06:32:41')");
+        // insert default date_slot  setting
+        DB::insert("INSERT INTO `delivery_slot_settings`
+        (`id`, `date_interval`, `date_end`, `status`, `created_at`, `updated_at`)
+         VALUES (NULL, '0', '8', '1', NULL, NULL)");
+
       
     }
 }
